@@ -8,19 +8,13 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
+
+#include "Symbols.h"
+#include "ASTPrintContext.h"
 
 namespace AST {
     // Abstract syntax tree.  ASTNode is abstract base class for all other nodes.
-
-    // Json conversion and pretty-printing can pass around a print context object
-    // to keep track of indentation, and possibly other things.
-    class AST_print_context {
-    public:
-        int indent_; // Number of spaces to place on left, after each newline
-        AST_print_context() : indent_{0} {};
-        void indent() { ++indent_; }
-        void dedent() { --indent_; }
-    };
 
     class ASTNode {
     public:
@@ -145,6 +139,8 @@ namespace AST {
         Formals& formals_;
         ASTNode& returns_;
         Block& statements_;
+        // Symbol table information
+        std::unordered_map<std::string, Symbol> variables;
     public:
         explicit Method(ASTNode& name, Formals& formals, ASTNode& returns, Block& statements) :
           name_{name}, formals_{formals}, returns_{returns}, statements_{statements} {}

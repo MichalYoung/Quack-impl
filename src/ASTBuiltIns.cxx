@@ -12,6 +12,15 @@ static AST::Class Nothing = AST::Class(
         *new AST::Methods() // Zero methods
         );
 
+static AST::Class Obj = AST::Class(
+        *new AST::Ident("Obj"), // Name
+        nullptr, // Superclass
+        /* Constructor */
+        *new AST::Method(*new AST::Ident("Construct"), *new AST::Formals(),
+                *new AST::Ident("Obj"), *new AST::Block(),
+                *new AST::Methods)
+        )
+
 static AST::Ident AST_builtins::bi_true = AST::Ident("true");
 static AST::Ident AST_builtins::bi_false = AST::Ident("false");
 
